@@ -183,15 +183,30 @@ for (s in c(3, 4, 5)) {
 
 Aber wir hoffen alle, dass wir doch eine gute Note bekommen. Fügen Sie einen Code-Block hier ein, der das gleiche aber mit "ausgezeichneten" Noten (=1 bzw. >= 13) macht. (Bei evtl. Copy-Paste nicht vergessen, "fallen...durch" durch etwas Passendes zu ersetzen!)  
 
-code_block_hier
+
+```r
+for (s in c(3, 4, 5)) {
+    excellence <- pnorm(13, mean = mu, sd = s, lower.tail = FALSE)
+    output <- paste("Bei einer Standardabweichung von", s, "bekommen", excellence * 
+        100, "% eine sehr gute Note.")
+    print(output)
+}
+```
+
+```
+## [1] "Bei einer Standardabweichung von 3 bekommen 4.77903522728147 % eine sehr gute Note."
+## [1] "Bei einer Standardabweichung von 4 bekommen 10.5649773666855 % eine sehr gute Note."
+## [1] "Bei einer Standardabweichung von 5 bekommen 15.8655253931457 % eine sehr gute Note."
+```
+
 
 Wie steht die Anzahl guter Noten in Beziehung zur Anzahl schlechter Noten? 
 
-antwort_hier
+Es fallen deutlich mehr Studenten durch als eine sehr gute Note bekommen.
 
 Warum?
 
-antwort_hier
+Weil der Notenbereich, in dem man durchfällt, größer ist als der, in dem man eine Eins bekommt.
 
 ## Kurtosis und Schiefe
 Kurtosis (im Deutschen auch *Wölbung*) ist ein Maß dafür, wie spitz eine Verteilung ist. Die Normalverteilung wird nie zu extrem spitz -- der Gipfel bleibt immer schön rund, obwohl er manchmal eng wird. Andere Verteilungen (z.B. die Laplace-Verteilung ) haben Gipfel, die nicht rund sind.   
@@ -200,18 +215,11 @@ Schiefe (*skewness*) beschriebt die (A)Symmetrie einer Verteilung. Eine Verteilu
 
 Die Verteilung von Noten ist oft schief mit mehr guten Noten. Ist die Verteilung rechts- oder linksschief?
 
-antwort_hier
+rechtsschief (ups...)
 
 Vielleicht hilft folgende Grafik mit der Visualisierung:
 
-
-```
-## Error: there is no package called 'sn'
-```
-
-```
-## Error: konnte Funktion "dsn" nicht finden
-```
+![plot of chunk unnamed-chunk-10](figure/unnamed-chunk-10.png) 
 
 
 ## Von Perzentilen auf Häufikgeiten
@@ -275,7 +283,14 @@ noten.dist
 
 Jetzt können wir die absoluten Häufigkeiten auch plotten:
 
-code_block_hier
+
+```r
+ggplot(data = noten.dist, aes(x = Notenpunkte, y = Anzahl, color = Standardabweichung)) + 
+    geom_line() + scale_x_continuous(limits = c(0, 16))
+```
+
+![plot of chunk unnamed-chunk-12](figure/unnamed-chunk-12.png) 
+
 
 Beantworten Sie ein paar Fragen über die Verteilung, indem Sie den passenden R-Code einsetzen:
 
@@ -287,15 +302,15 @@ Beantworten Sie ein paar Fragen über die Verteilung, indem Sie den passenden R-
 
 2. Wie viele Studenten bekommen zumindest 10 NP?
 
-    `code_hier` Studenten bekommen zumindest 10 Notenpunkte.
+    12.6246 Studenten bekommen zumindest 10 Notenpunkte.
 
 3. Wie viele Studenten bekommen weniger als 10 NP?
 
-    `code_hier` Studenten bekommen weniger als 10 Notenpunkte.
+    37.3754 Studenten bekommen weniger als 10 Notenpunkte.
 
 4. Wie viele Studenten bekommen weniger als 8 NP?
 
-    `code_hier` Studenten bekommen weniger als 8 Notenpunkte.
+    25 Studenten bekommen weniger als 8 Notenpunkte.
 
 
 (Die Einrückung mit 4 Leerschlägen ist die Syntax für mehrere Absätze pro Punkt auf der Liste.)
@@ -307,29 +322,73 @@ Um überdurchschnittlich zu sein, muss man mehr als 8 Notenpunkte bekommen.
 
 Nicht so überraschend, dass "überdurchschnittlich" auch "mehr Punkte als den Durchschnitt bekommen" heißt! Wie sieht es aus, wenn wir besser als 99% der anderen abschließen möchten?
 
-Um in dem besten 1% abzuschließen, muss man zumindest `code_hier` Notenpunkte bekommen.
+Um in dem besten 1% abzuschließen, muss man zumindest 14.979 Notenpunkte bekommen.
 
 ## z-Transformation
 Bei der Überprüfung der Lehrqualität scheint es der Verwaltung, dass ein gewisser Dozent andere Noten als andere Dozenten vergibt. Es wird entschieden, dass der Notenspiegel bei den Teilnehmern in einem von seinen Kursen getestet wird, um zu schauen, ob er sich von signifikant von der idealisierten Notenverteilung ($\mu=8,\sigma=3$) unterscheidet. Um zu zeigen, dass Gott $\alpha=0.06$ so viel liebt wie $\alpha=0.05$ (<a href="http://dx.doi.org/10.1037/0003-066X.44.10.1276">Rosnow & Rosenthal, 1989</a>), setzt die Verwaltung das Signikanzniveau auf 0.06. 
 
-Der kritische Wert für einen einseitigen $z$-Test ist `code_hier`.
+Der kritische Wert für einen einseitigen $z$-Test ist 1.5548.
 
-Die kritischen Werte für einen zweiseitigen $z$-Test sind $\pm$`code_hier`.
+Die kritischen Werte für einen zweiseitigen $z$-Test sind $\pm$1.8808.
 
 ### Gibt es einen Unterschied?
 Bei diesem Dozenten ist die Verwaltung wirklich unsicher, ob und was für einen Unterschied es geben könnte. (Welche Testart sollte man hier nutzen?)
 
 In einem kleinen Seminar mit 7 Studenten beträgt der Durchschnittswert 10. Unterscheidet sich der Notenspiegel von dem idealen? Berechnen Sie den $z$-Test:
 
-code_hier
 
-Das ist ein **_eins_von_signifikanter_insignifikanter_** Unterschied. 
+```r
+n = 7
+xm = 10
+sigma = 3
+
+z = ((xm - mu)/sigma) * sqrt(n)
+print(z)
+```
+
+```
+## [1] 1.764
+```
+
+```r
+f = z > qnorm(0.97)
+print(f)
+```
+
+```
+## [1] FALSE
+```
+
+
+Das ist ein **_insignifikanter_** Unterschied. 
 
 In einer Vorlesung vom selben Dozenten mit 50 Teilnehmern beträgt der Durchschnittswert wieder 10. (Es scheint, dass der Dozent 10 besonders toll findet.) Berechnen Sie den $z$-Test:
 
-code_hier
 
-Das ist ein **_eins_von_signifikanter_insignifikanter_** Unterschied. 
+```r
+n = 50
+xm = 10
+sigma = 3
+
+z = ((xm - mu)/sigma) * sqrt(n)
+print(z)
+```
+
+```
+## [1] 4.714
+```
+
+```r
+f = z > qnorm(0.97)
+print(f)
+```
+
+```
+## [1] TRUE
+```
+
+
+Das ist ein **_signifikanter_** Unterschied. 
 
 Ist die Benotung vom Dozenten weniger als ideal? 
 
@@ -340,15 +399,59 @@ In einem mittelgroßen Seminar mit 20 Studenten beträgt der Durchschnittswert 7
 
 Berechnen Sie den $z$-Test:
 
-code_hier
 
-Das ist ein **_eins_von_signifikanter_insignifikanter_** Unterschied. 
+```r
+n = 20
+xm = 7
+sigma = 3
+
+z = ((xm - mu)/sigma) * sqrt(n)
+print(z)
+```
+
+```
+## [1] -1.491
+```
+
+```r
+f = z > qnorm(0.97)
+print(f)
+```
+
+```
+## [1] FALSE
+```
+
+
+Das ist ein **_insignifikanter_** Unterschied. 
 
 Später ergibt sich, dass es eigentlich 25 Studenten im Kurs gab. (Der Dozent hat "einen Tippfehler" gemacht, als er seine Teilnehmerzahl per Mail an die Verwaltung geschickt hat.) Der Durchschnittswert bleibt -- behauptet der Dozent -- immer noch bei 7. Er behauptet weiterhin, dass das wunderbar nah am Erwartungswert (8) ist, und dass man ihn in Ruhe lassen sollte. Ist er zu streng?
 
 Berechnen Sie den $z$-Test:
 
-code_hier
+
+```r
+n = 25
+xm = 7
+sigma = 3
+
+z = ((xm - mu)/sigma) * sqrt(n)
+print(z)
+```
+
+```
+## [1] -1.667
+```
+
+```r
+f = z > qnorm(0.97)
+print(f)
+```
+
+```
+## [1] FALSE
+```
+
 
 Das ist ein **_eins_von_signifikanter_insignifikanter_** Unterschied. 
 
