@@ -85,5 +85,8 @@ ggplot(diamonds,aes(x=carat,y=price, color=cut)) + geom_point()
 ggplot(diamonds,aes(x=carat,y=price, color=clarity)) + geom_point()
 ```
 
+Das sieht bei "cut" ziemlich verwirrend aus, aber "clarity" sieht schön klar (ha ha...) aus. Und statistisch?
+
+
 # Lizenz
 Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
