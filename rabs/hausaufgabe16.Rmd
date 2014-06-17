@@ -61,7 +61,6 @@ ggplot(diamonds,aes(x=carat,y=price,color=color)) + geom_point() + facet_wrap(~c
 # Noch eine Überlegung
 Haben Sie dabei explorativ oder konfirmativ gearbeitet? Was hat das für eine Auswirkung auf die Interpretation der Ergebnisse?
 
-
 ## Höherer Preis = mehr Karat + ?
 Okay, jedes Kind weiß: je mehr Karat, desto besser. Beim Blick auf die Daten fallen aber weitere Spalten auf: die Einteilung für "cut" geht von "fair" bis "ideal", die für clarity von "worst" bis "best", die für "color" ebenfalls. Die Vermutung liegt nahe, dass eine derartige Einteilung Auswirkungen auf den Preis hat. Aber wie ist das Zusammenspiel?
 
@@ -86,7 +85,6 @@ ggplot(diamonds,aes(x=carat,y=price, color=clarity)) + geom_point()
 ```
 
 Das sieht bei "cut" ziemlich verwirrend aus, aber "clarity" sieht schön klar (ha ha...) aus. Und statistisch?
-
 
 # Lizenz
 Dieses Werk ist lizenziert unter einer CC-BY-NC-SA Lizenz.
